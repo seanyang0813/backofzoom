@@ -1,15 +1,17 @@
 <template>
-  <div class="flex flex-col flex justify-center w-1/2 md:w-1/3">
-    <div class="mb-6">
+  <div class="flex-col flex justify-center">
+    <div class="padding">
+    </div>
+    <div class="mb-6 flex flex-row justify-center">
       <h1 class="font-sans Roboto font-bold text-4xl text-blue-500">Back of Zoom</h1>
     </div>
-    <div class="mb-6">
-      <input v-model="name" placeholder="nickname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="20">
+    <div class="mb-6 flex flex-row justify-center">
+      <input v-model="name" placeholder="nickname" class="md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="20">
     </div>
-    <div class="mb-6">
-      <input v-model="id" placeholder="meeting ID or url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    <div class="mb-6 flex flex-row justify-center">
+      <input v-model="id" placeholder="meeting ID or url" class="md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
-    <div class="mb-6">
+    <div class="mb-6 flex flex-row justify-center">
       <button v-on:click="join" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
         Join room
       </button>
@@ -19,19 +21,29 @@
 
 <script>
 export default {
+  props: ['meeting'],
   name: 'HelloWorld',
   data: function() {
     return {
       name: "",
-      id: "",
+      id: this.meeting,
+      valid: true
     }
   },
   methods: {
     join: function () {
       let name = this.name
       let id = this.parseId()
-      console.log(name)
-      console.log(id)
+      if (id == null) {
+        return
+      }
+      this.$emit("updateName", name)
+      this.$router.push({
+        path: id.toString(), 
+        params: {
+          "name": name,
+          }
+        })
     },
     parseId: function () {
       //first check if it's the meeting id which is all digits
@@ -55,4 +67,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .padding {
+    height: 30vh;
+  }
+
+  .red {
+    
+  }
 </style>

@@ -1,27 +1,26 @@
 <template>
-  <div id="app" class="flex justify-center">
-    <Home></Home>
-  </div>
+  <router-view :username="name" :meeting="meeting" @setId="updateId" @updateName="updateName"></router-view>
 </template>
 
 <script>
-import Home from './components/Home.vue'
-
 export default {
   name: 'App',
-  components: {
-    Home
-  }
+  data: function() {
+    return {
+      name: "",
+      meeting: ""
+    }
+  },
+  methods: {
+    updateName(name) {
+      this.name = name;
+    },
+    updateId(id) {
+      this.meeting = id.toString();
+    }
+  } 
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
