@@ -16,6 +16,12 @@
         Join room
       </button>
     </div>
+    <div class="mb-6 flex flex-row justify-center">
+      <p v-if="!validName && validId" class="text-red-500 text-xs italic">Enter a valid username</p>
+      <p v-if="!validId && validName" class="text-red-500 text-xs italic">Enter a valid meeting ID or url</p>
+      <p v-if="!validId && !validName" class="text-red-500 text-xs italic">Enter a valid username and meeting ID</p>
+    </div>
+    
   </div>
 </template>
 
@@ -27,14 +33,22 @@ export default {
     return {
       name: "",
       id: this.meeting,
-      valid: true
+      validName: true,
+      validId: true,
     }
   },
   methods: {
     join: function () {
-      let name = this.name
+      let name = this.name.trim()
       let id = this.parseId()
+      if (name.length == 0) {
+        this.name = ""
+        this.validName = false;
+        return
+      }
       if (id == null) {
+        this.id = ""
+        this.validId = false;
         return
       }
       this.$emit("updateName", name)
@@ -60,8 +74,22 @@ export default {
         return parseInt(result[1])
       }
       return null
+    },
+  },
+  watch: {
+      name: function () {
+        console.log("name changed")
+        if (this.name != "") {
+          this.validName = true;
+        }
+      },
+      id: function() {
+        console.log("id changed")
+        if (this.id != "") {
+          this.validId = true;
+        }  
+      }
     }
-  }
 }
 </script>
 
@@ -69,9 +97,5 @@ export default {
 <style scoped>
   .padding {
     height: 30vh;
-  }
-
-  .red {
-    
   }
 </style>
