@@ -9,7 +9,7 @@
       <input v-model="name" placeholder="nickname" class="md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="20">
     </div>
     <div class="mb-6 flex flex-row justify-center">
-      <input v-model="id" placeholder="meeting ID or url" class="md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      <input v-model="id" @keyup.enter="join" placeholder="meeting ID or url" class="md:w-1/2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-6 flex flex-row justify-center">
       <button v-on:click="join" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
