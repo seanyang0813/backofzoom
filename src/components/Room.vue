@@ -39,7 +39,8 @@ export default {
     if (this.username != "") {
       this.name = this.username;
       //initialize the sockets
-      this.socket = io("https://seanyang0813-backofzoom-backend.zeet.app:3000");
+      this.socket = io("https://seanyang0813-backofzoom-backend.zeet.app");
+      console.log(this.socket);
       this.socket.emit('join-room', this.room_number);
       this.socket.on("message-send", (chatMessage) => {
         this.messages.push({message: chatMessage.message, name: chatMessage.user})
