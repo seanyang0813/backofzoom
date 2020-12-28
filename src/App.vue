@@ -23,4 +23,9 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter');
+
+html, body {
+  font-family: 'Inter', sans-serif;
+}
 </style>
