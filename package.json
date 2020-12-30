@@ -12,6 +12,7 @@
     "socket.io-client": "^3.0.4",
     "tailwindcss": "^1.8.12",
     "vue": "^2.6.11",
+    "vue-gtag": "^1.10.0",
     "vue-router": "^3.4.9"
   },
   "devDependencies": {
