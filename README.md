@@ -1,6 +1,6 @@
 # backofzoom
 ## demo
-(backofzoom.vercel.app)[backofzoom.vercel.app]
+[backofzoom.vercel.app](backofzoom.vercel.app)
 
 ## Project setup
 ```
