@@ -9,6 +9,9 @@
       </div>
     </main>
     <div>
+      <transition v-if="pressedOnCooldown" name="fade">
+          <center><img src="@/assets/timer-sand-empty.png"></center>
+      </transition>
       <chat @enter="submit"/>
     </div>
   </div>
@@ -33,6 +36,8 @@ export default {
       room_number: this.$route.path.substring(1),
       messages: [],
       socket: null,
+      onCooldown: false,
+      pressedOnCooldown: false,
     }
   },
   mounted() {
@@ -40,7 +45,7 @@ export default {
       this.name = this.username;
       //initialize the sockets
       this.socket = io("https://seanyang0813-backofzoom-backend.zeet.app");
-      console.log(this.socket);
+      //console.log(this.socket);
       this.socket.emit('join-room', this.room_number);
       this.socket.on("message-send", (chatMessage) => {
         this.messages.push({message: chatMessage.message, name: chatMessage.user})
@@ -61,9 +66,20 @@ export default {
   },
   methods: {
     submit(message) {
-      console.log(message);
-      this.messages.push({message: message, name: this.name})
-      this.socket.emit('message', {room: this.room_number, user:this.name, message: message});
+      //console.log(message);
+      if (!this.onCooldown) {
+        this.messages.push({message: message, name: this.name})
+        this.socket.emit('message', {room: this.room_number, user:this.name, message: message});
+        this.onCooldown = true;
+        setTimeout(() => { // users can send message every 0.5s, adjust accordingly!
+          this.onCooldown = false;
+          this.pressedOnCooldown = false;
+        }, 500)
+      } else {
+        // you can add a warning here, be it a modal, message, alert, etc.
+        // this.messages.push({message: "slow down!", name: ''}) <= this looked ugly because of the colon, I just added a cooldown icon ;)
+        this.pressedOnCooldown = true;
+      }
     }
   }
 }
@@ -71,4 +87,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s
+}
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+{
+  opacity: 0
+}
 </style>
