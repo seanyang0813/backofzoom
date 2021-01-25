@@ -78,13 +78,13 @@ export default {
   },
   watch: {
       name: function () {
-        console.log("name changed")
+        //console.log("name changed")
         if (this.name != "") {
           this.validName = true;
         }
       },
       id: function() {
-        console.log("id changed")
+        //console.log("id changed")
         if (this.id != "") {
           this.validId = true;
         }  
